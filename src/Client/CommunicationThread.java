@@ -11,6 +11,7 @@ public class CommunicationThread extends Thread{
 	private BufferedReader in;
 	private Scanner sc = null;
 	private String message;
+	private String[] Users;
 	
 	public CommunicationThread(PrintWriter out, BufferedReader in){
 		this.out = out;
@@ -26,6 +27,10 @@ public class CommunicationThread extends Thread{
             message = in.readLine();
             
             System.out.println("Message : " + message);
+            
+            if(message.indexOf("Users")==0){
+            	Users = message.split(";");
+            }
             
             } catch (IOException e) {
                 

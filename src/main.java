@@ -10,6 +10,12 @@ public class main {
 		// TODO Auto-generated method stub
 		Server server = new Server();
 		Client client = new Client();
+		/*try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		Client client2 = new Client();
 	}
 

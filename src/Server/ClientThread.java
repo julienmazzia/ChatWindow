@@ -13,7 +13,8 @@ public class ClientThread extends Thread{
 	private BufferedReader in;
 	private PrintWriter out;
 	private String userName;
-	private String message;
+	private String message="";
+	private boolean FirstMessage=true;
 	private List<String> usersList = new ArrayList<String>();
 	private ExecutorService executor = Executors.newFixedThreadPool(1);
 	
@@ -26,11 +27,20 @@ public class ClientThread extends Thread{
 	
 	public void run(){
 		
+		if(FirstMessage){
+			FirstMessage = false;
+			usersList = UserList.getUsersList();
+			for(Iterator<String> i = usersList.iterator(); i.hasNext();){
+	        	String item = i.next();
+	        	message = message + ";" + item;
+	        }
+			sendMessage("Users" + message);
+		}
+		
 		while(true){
             try {   
             message = in.readLine();
-            sendMessage(message);
-            //System.out.println(userName+" : "+message);
+            sendMessage(userName + " : " + message);
             
             } catch (IOException e) {
                 
@@ -42,16 +52,14 @@ public class ClientThread extends Thread{
 	public void sendMessage(String message){
         Thread sender = new Thread(new Runnable(){
     		public void run(){
-    			out.println(userName + " : " + message);
+    			out.println(message);
     	        out.flush();
     		}
     	});
         usersList = UserList.getUsersList();
         for(Iterator<String> i = usersList.iterator(); i.hasNext();){
         	String item = i.next();
-        	if(item != userName){
             	executor.execute(sender);	
-        	}
         }
         
 	}
