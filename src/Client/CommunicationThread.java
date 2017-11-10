@@ -11,13 +11,16 @@ public class CommunicationThread extends Thread{
 	private BufferedReader in;
 	private Scanner sc = null;
 	private String message;
-	private String[] Users;
+	private String[] users;
+	private ClientGUI frame;
 	
-	public CommunicationThread(PrintWriter out, BufferedReader in){
+	public CommunicationThread(PrintWriter out, BufferedReader in, String userName){
 		this.out = out;
 		this.in = in;
-		Thread t4 = new Thread(new consoleListener(this));
-		t4.start();
+		frame = new ClientGUI(this, userName);
+		frame.setVisible(true);
+		//Thread t4 = new Thread(new consoleListener(this));
+		//t4.start();
 	}
 	
 	public void run(){
@@ -25,11 +28,14 @@ public class CommunicationThread extends Thread{
             try {
                 
             message = in.readLine();
-            
             System.out.println("Message : " + message);
             
             if(message.indexOf("Users")==0){
-            	Users = message.split(";");
+            	users = message.split(":");
+            	users = users[1].split(";");
+            	frame.FillList(users);
+            }else{
+            	frame.writeMessage(message);
             }
             
             } catch (IOException e) {
@@ -40,9 +46,8 @@ public class CommunicationThread extends Thread{
         
 	}
 	
-	public void sendMessage(String message){
+	public synchronized void sendMessage(String message){
 		out.println(message);
         out.flush();
-		
 	}
 }

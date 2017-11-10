@@ -29,12 +29,21 @@ public class ClientThread extends Thread{
 		
 		if(FirstMessage){
 			FirstMessage = false;
+			boolean first = true;
 			usersList = UserList.getUsersList();
 			for(Iterator<String> i = usersList.iterator(); i.hasNext();){
 	        	String item = i.next();
-	        	message = message + ";" + item;
+	        	if(item!=userName){
+		        	if(first==true){
+		        		first=false;
+			        	message = message + item;
+		        	}else{
+		        		message = message + ";" + item;
+		        	}
+	        		
+	        	}
 	        }
-			sendMessage("Users" + message);
+			sendMessage("Users:" + message);
 		}
 		
 		while(true){

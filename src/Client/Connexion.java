@@ -29,7 +29,7 @@ public class Connexion extends Thread{
 	        login = sc.nextLine();
 	        sendMessage(login);
 	        
-	        t2 = new Thread(new CommunicationThread(out, in));
+	        t2 = new Thread(new CommunicationThread(out, in, login));
 	        t2.start();
 	        
 		} catch (IOException e) {
