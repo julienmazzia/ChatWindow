@@ -77,6 +77,7 @@ public class ClientGUI extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				com.sendMessage(message.getText());
+				message.setText("");
 			}
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

@@ -28,6 +28,7 @@ public class ClientsPool implements notifyUserChange{
 			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
 			UserList.addUser(userName);
+			UserList.addOut(out);
 			System.out.println("Nouveau client "+ userName +" créé");
 			t3 = new Thread(new ClientThread(userName, in, out));
 			t3.run();

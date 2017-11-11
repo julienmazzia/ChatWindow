@@ -12,11 +12,12 @@ import java.util.concurrent.Executors;
 public class ClientThread extends Thread{
 	private BufferedReader in;
 	private PrintWriter out;
+	private PrintWriter BrodcastOut;
 	private String userName;
 	private String message="";
 	private boolean FirstMessage=true;
 	private List<String> usersList = new ArrayList<String>();
-	private ExecutorService executor = Executors.newFixedThreadPool(1);
+    private List<PrintWriter> outList = new ArrayList<PrintWriter>();
 	
 	
 	public ClientThread(String userName, BufferedReader in, PrintWriter out){
@@ -33,15 +34,12 @@ public class ClientThread extends Thread{
 			usersList = UserList.getUsersList();
 			for(Iterator<String> i = usersList.iterator(); i.hasNext();){
 	        	String item = i.next();
-	        	if(item!=userName){
 		        	if(first==true){
 		        		first=false;
 			        	message = message + item;
 		        	}else{
 		        		message = message + ";" + item;
 		        	}
-	        		
-	        	}
 	        }
 			sendMessage("Users:" + message);
 		}
@@ -58,18 +56,18 @@ public class ClientThread extends Thread{
         }
 	}
 	
-	public void sendMessage(String message){
-        Thread sender = new Thread(new Runnable(){
-    		public void run(){
-    			out.println(message);
-    	        out.flush();
-    		}
-    	});
+	public synchronized void sendMessage(String message){
         usersList = UserList.getUsersList();
-        for(Iterator<String> i = usersList.iterator(); i.hasNext();){
-        	String item = i.next();
-            	executor.execute(sender);	
+        outList = UserList.getOutList();
+        for(Iterator<PrintWriter> i = outList.iterator(); i.hasNext();){
+        	BrodcastOut = i.next();
+        	BrodcastOut.println(message);
+			BrodcastOut.flush();
+            //executor.execute(sender);
         }
+        
+        
+       
         
 	}
 	
