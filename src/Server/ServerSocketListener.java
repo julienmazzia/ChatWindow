@@ -2,6 +2,7 @@ package Server;
 
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ServerSocketListener implements notifyNewUser{
@@ -14,8 +15,10 @@ public class ServerSocketListener implements notifyNewUser{
 
 	@Override
 	public void NewUser(String userName, Socket socket) {
+		LogWriter log = new LogWriter(this);
 		ClientsPool client = new ClientsPool(this);
-		for (notifyUserChange observer : list) {
+		for(Iterator<notifyUserChange> i = list.iterator(); i.hasNext(); ) {
+			notifyUserChange observer = i.next();
 			observer.CreateNewUser(userName, socket);
 		}
 		

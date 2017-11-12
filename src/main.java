@@ -17,6 +17,7 @@ public class main {
 			e.printStackTrace();
 		}*/
 		Client client2 = new Client();
+		Client client3 = new Client();
 	}
 
 }

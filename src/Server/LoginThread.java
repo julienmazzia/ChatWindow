@@ -18,7 +18,7 @@ public class LoginThread extends Thread{
             while(true){
                 
             socket = serverSocket.accept();
-            System.out.println("Un client veut se connecter");
+            System.out.println("New client connected");
             
             t2 = new Thread(new Authentification(socket));
             t2.start();
@@ -26,7 +26,7 @@ public class LoginThread extends Thread{
             }
         } catch (IOException e) {
             
-            System.err.println("Erreur serveur");
+            System.err.println("Server error");
         }
 	}
 }

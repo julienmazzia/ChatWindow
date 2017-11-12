@@ -26,14 +26,14 @@ public class Server {
 	public Server(){
 		try {
 			serverSocket = new ServerSocket(2009);
-            System.out.println("Le serveur est à l'écoute du port "+serverSocket.getLocalPort());
+            System.out.println("Server listening to port "+serverSocket.getLocalPort());
             ServerSocketListener sl = new ServerSocketListener();
             
             t = new Thread(new LoginThread(serverSocket));
             t.start();
             
         } catch (IOException e) {
-        	System.err.println("Le port est déjà utilisé !");
+        	System.err.println("Port already in use");
         }
 	}
 	

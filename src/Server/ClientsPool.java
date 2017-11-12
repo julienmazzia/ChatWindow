@@ -29,11 +29,11 @@ public class ClientsPool implements notifyUserChange{
 			PrintWriter out = new PrintWriter(socket.getOutputStream());
 			UserList.addUser(userName);
 			UserList.addOut(out);
-			System.out.println("Nouveau client "+ userName +" créé");
-			t3 = new Thread(new ClientThread(userName, in, out));
+            System.out.println("New connection from " + socket.getInetAddress().getHostAddress() +"("  + userName+ ")");
+			t3 = new Thread(new ClientThread(userName, in, out, socket.getInetAddress().getHostAddress()));
 			t3.run();
 	        } catch (IOException e) {
-	            System.err.println(userName + "C'est déconnecté ");
+	            System.err.println(userName + " is deconnected");
 	        }
 		
 	}

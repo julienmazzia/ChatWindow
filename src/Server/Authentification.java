@@ -25,15 +25,19 @@ public class Authentification extends Thread{
             out = new PrintWriter(socket.getOutputStream());
             login = in.readLine();
             
-            out.println("Bienvenue " + login + " !");
-            System.out.println(login +" vient de se connecter ");
+            if(login.indexOf("Lost")==0){
+            	System.out.println("connexion lost");
+            	return;
+            }
+            
+            out.println("Welcome " + login + " !");
             out.flush();
             //UserList.addUser(login);
             notify.NewUser(login, socket);
             
         } catch (IOException e) {
             
-            System.err.println(login+" ne répond pas !");
+            System.err.println(login+" no answer");
         }
 	}
 }

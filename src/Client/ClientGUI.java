@@ -25,6 +25,8 @@ import java.util.Iterator;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.JTextArea;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ClientGUI extends JFrame {
 
@@ -54,8 +56,14 @@ public class ClientGUI extends JFrame {
 	 * Create the frame.
 	 */
 	public ClientGUI(CommunicationThread com, String userName) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				com.sendMessage("DiscUser:"+userName);
+			}
+		});
 		this.com = com;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -118,6 +126,7 @@ public class ClientGUI extends JFrame {
 		
 		textArea = new JTextArea();
 		textArea.setText("");
+		textArea.setEditable(false);
 		panel.add(textArea, "name_99871164578494");
 		panel_1.setLayout(new CardLayout(0, 0));
 		
